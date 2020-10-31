@@ -1,4 +1,13 @@
 
 declare type Flight = {
-  id: string,
-}
+  id: string;
+};
+
+declare type FilterOption = {
+  code: string;
+  value: string;
+};
+
+declare type IsomorphicObject = {
+  [propName: string]: string;
+};
