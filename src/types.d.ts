@@ -11,3 +11,16 @@ declare type FilterOption = {
 declare type IsomorphicObject = {
   [propName: string]: string;
 };
+
+declare type FlightsState = {
+  items: Flight[];
+};
+
+declare type FiltersState = {
+  airlines: IsomorphicObject,
+  options: IsomorphicObject,
+};
+
+declare type RootState = {
+  [propName: string]: any,
+};

@@ -2,70 +2,29 @@
   <aside class="filters">
     <filter-block
       title="Опции тарифа"
-      :filters="tariffs"
+      :filters="optionsArray"
     />
 
     <filter-block
       title="Авиакомпании"
-      :filters="airlines"
+      :filters="airlinesArray"
     />
   </aside>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { mapActions, mapGetters } from 'vuex';
 import FilterBlock from '@/components/FilterBlock.vue';
-
-type FiltersTree = {
-  tariffs: IsomorphicObject;
-  airlines: IsomorphicObject;
-};
 
 @Component({
   components: { FilterBlock },
+  computed: mapGetters('filters', ['airlinesArray', 'optionsArray']),
+  methods: mapActions('filters', ['load']),
 })
 export default class Filters extends Vue {
-  filters: FiltersTree = {
-    tariffs: {
-      onlyDirect: 'Только прямые',
-      onlyWithBaggage: 'Только с багажом',
-      onlyReturnable: 'Только возвратные',
-    },
-    airlines: {
-      ALL: 'Все',
-      KC: 'Air Astana',
-      HY: 'Uzbekistan Airways',
-      EK: 'Emirates',
-      HR: 'HR',
-      FZ: 'Flydubai',
-      S7: 'S7 Airlines',
-      LH: 'Lufthansa',
-      BT: 'Air Baltic',
-      CZ: 'China Southern Airlines',
-      SU: 'Aeroflot',
-      B2: 'Belavia',
-      DV: 'SCAT Airlines',
-      TK: 'Turkish Airlines',
-    },
-  }
-
-  get airlines(): FilterOption[] {
-    return Filters.transformToOptions(this.filters.airlines);
-  }
-
-  get tariffs(): FilterOption[] {
-    return Filters.transformToOptions(this.filters.tariffs);
-  }
-
-  static transformToOptions(obj: IsomorphicObject): FilterOption[] {
-    return Object.keys(obj)
-      .reduce((arr: FilterOption[], key: string) => ([
-        ...arr,
-        {
-          code: key,
-          value: obj[key],
-        },
-      ]), []);
+  created() {
+    this.load();
   }
 }
 </script>

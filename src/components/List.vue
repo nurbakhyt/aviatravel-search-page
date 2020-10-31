@@ -10,15 +10,18 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { mapActions, mapGetters } from 'vuex';
 import Card from '@/components/Card.vue';
 
 @Component({
   components: { Card },
+  computed: mapGetters('flights', ['items']),
+  methods: mapActions('flights', ['load']),
 })
 export default class List extends Vue {
-  items: Flight[] = Array(10)
-    .fill(1)
-    .map((_: number, index: number) => ({ id: `${index}` }));
+  created() {
+    this.load();
+  }
 }
 </script>
 
