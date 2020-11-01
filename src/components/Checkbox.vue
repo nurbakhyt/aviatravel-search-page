@@ -5,8 +5,10 @@
   >
     <input
       :id="item.code"
+      :value="item.code"
       type="checkbox"
       class="checkbox__input"
+      v-model="list"
     >
     {{ item.value }}
   </label>
@@ -19,6 +21,17 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 export default class Checkbox extends Vue {
   @Prop({ required: true })
   item!: FilterOption;
+
+  @Prop({ required: true })
+  value!: string[];
+
+  get list(): string[] {
+    return this.value;
+  }
+
+  set list(newList: string[]) {
+    this.$emit('input', newList);
+  }
 }
 </script>
 
