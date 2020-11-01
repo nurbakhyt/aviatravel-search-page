@@ -19,16 +19,16 @@ const state: FiltersState = {
     onlyWithBaggage: 'Только с багажом',
     onlyReturnable: 'Только возвратные',
   },
-}
+};
 
 export default {
   namespaced: true,
   state,
   getters: {
-    airlinesRaw: (state: FiltersState) => state.airlines,
-    airlinesArray: (state: FiltersState) => transformToOptions(state.airlines),
-    optionsRaw: (state: FiltersState) => state.options,
-    optionsArray: (state: FiltersState) => transformToOptions(state.options),
+    airlinesRaw: (localState: FiltersState) => localState.airlines,
+    airlinesArray: (localState: FiltersState) => transformToOptions(localState.airlines),
+    optionsRaw: (localState: FiltersState) => localState.options,
+    optionsArray: (localState: FiltersState) => transformToOptions(localState.options),
   },
   actions: {
     async load({ commit }: ActionContext<FiltersState, RootState>) {
@@ -38,9 +38,10 @@ export default {
     },
   },
   mutations: {
-    SET_AIRLINES(state: FiltersState, airlines: IsomorphicObject) {
-      state.airlines = {
-        ...state.airlines,
+    SET_AIRLINES(localState: FiltersState, airlines: IsomorphicObject) {
+      // eslint-disable-next-line
+      localState.airlines = {
+        ...localState.airlines,
         ...airlines,
       };
     },

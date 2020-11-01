@@ -5,19 +5,25 @@
         <div class="brand">
           <div class="brand__logo">
             <img
-              src=" https://aviata.kz/static/airline-logos/80x80/KC.png"
+              :src="logo"
               alt="Лого авиаперевозчика"
             >
           </div>
           <div class="brand__name">
-            Air Astana
+            {{ name }}
           </div>
         </div>
-        <date-time />
+        <date-time
+          :segments="segments"
+          type="origin"
+        />
 
-        <itinerary-segments />
+        <itinerary-segments :itinerary="itinerary"/>
 
-        <date-time />
+        <date-time
+          :segments="segments"
+          type="dest"
+        />
       </div>
 
       <div class="additional-info">
@@ -35,7 +41,10 @@
         >
           Условия тарифа
         </a>
-        <span class="additional_info__label">
+        <span
+          v-if="flight.refundable"
+          class="additional_info__label"
+        >
           <svg
             width="16"
             height="16"
@@ -74,7 +83,7 @@
     </div>
     <div class="card__footer">
       <p class="price">
-        590 240
+        {{ flight.price }}
         <span class="price__currency">₸</span>
       </p>
       <button class="btn btn--buy">Выбрать</button>
@@ -89,6 +98,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { mapGetters } from 'vuex';
 import DateTime from '@/components/DateTime.vue';
 import ItinerarySegments from '@/components/ItinerarySegments.vue';
 
@@ -97,10 +107,27 @@ import ItinerarySegments from '@/components/ItinerarySegments.vue';
     DateTime,
     ItinerarySegments,
   },
+  computed: mapGetters('filters', ['airlinesRaw']),
 })
 export default class Card extends Vue {
   @Prop({ required: true })
   flight!: Flight;
+
+  get logo(): string {
+    return `https://aviata.kz/static/airline-logos/80x80/${this.flight.validating_carrier}.png`;
+  }
+
+  get name(): string {
+    return this.airlinesRaw[this.flight.validating_carrier];
+  }
+
+  get itinerary(): Itinerary {
+    return this.flight.itineraries[0][0];
+  }
+
+  get segments(): Segment[] {
+    return this.itinerary.segments;
+  }
 }
 </script>
 
@@ -137,7 +164,7 @@ export default class Card extends Vue {
 
 .brand {
   display: flex;
-  width: 100px;
+  width: 110px;
 }
 
 .brand__logo {
@@ -157,7 +184,6 @@ export default class Card extends Vue {
 .additional-info {
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 .additional-info__link {
@@ -166,6 +192,11 @@ export default class Card extends Vue {
   font-size: 12px;
   line-height: 16px;
   text-decoration: none;
+  margin-right: 24px;
+}
+
+.additional-info__link:last-child {
+  margin-right: 0;
 }
 
 .additional_info__label {

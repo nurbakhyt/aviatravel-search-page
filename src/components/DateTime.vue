@@ -1,15 +1,36 @@
 <template>
   <time class="date">
-    <span class="date__value">25 ноя, вс</span>
-    <span class="date__time">23:25</span>
+    <span class="date__value">{{ dateTime.date }}</span>
+    <span class="date__time">{{ dateTime.time }}</span>
   </time>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
-export default class DateTime extends Vue {}
+export default class DateTime extends Vue {
+  @Prop({ default: 'origin' })
+  type!: SegmentType;
+
+  @Prop({ required: true })
+  segments!: Segment[];
+
+  get segmentDateTime(): string {
+    if (this.type === 'origin') return this.segments[0].dep_time;
+
+    return this.segments[this.segments.length - 1].arr_time;
+  }
+
+  get dateTime(): DateTimeType {
+    const parsed = this.segmentDateTime.split(' ');
+
+    return {
+      date: parsed.slice(0, parsed.length - 1).join(' '),
+      time: parsed.slice(-1)[0],
+    };
+  }
+}
 </script>
 
 <style scoped>
