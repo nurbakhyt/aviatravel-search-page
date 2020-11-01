@@ -12,9 +12,7 @@ const toArray = (obj: IsomorphicObject): FilterOption[] => Object.keys(obj)
   ]), []);
 
 const state: FiltersState = {
-  airlines: {
-    ALL: 'Все',
-  },
+  airlines: {},
   options: {
     onlyDirect: 'Только прямые',
     onlyWithBaggage: 'Только с багажом',
@@ -45,19 +43,32 @@ export default {
     selectOptions({ commit }: ActionContext<FiltersState, RootState>, list: string[]) {
       commit('SELECT_OPTIONS', list);
     },
+    resetAirlines({ commit }: ActionContext<FiltersState, RootState>) {
+      commit('RESET_AIRLINES');
+    },
+    resetOptions({ commit }: ActionContext<FiltersState, RootState>) {
+      commit('RESET_OPTIONS');
+    },
+    resetAll({ commit }: ActionContext<FiltersState, RootState>) {
+      commit('RESET_AIRLINES');
+      commit('RESET_OPTIONS');
+    },
   },
   mutations: {
     SET_AIRLINES(localState: FiltersState, airlines: IsomorphicObject) {
-      localState.airlines = {
-        ALL: 'Все',
-        ...airlines,
-      };
+      localState.airlines = airlines;
     },
     SELECT_AIRLINES(localState: FiltersState, airlines: string[]) {
       localState.selectedAirlines = airlines;
     },
     SELECT_OPTIONS(localState: FiltersState, options: string[]) {
       localState.selectedOptions = options;
+    },
+    RESET_AIRLINES(localState: FiltersState) {
+      localState.selectedAirlines = [];
+    },
+    RESET_OPTIONS(localState: FiltersState) {
+      localState.selectedOptions = [];
     },
   },
 };

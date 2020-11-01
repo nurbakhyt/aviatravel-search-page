@@ -37,10 +37,16 @@ export default class Checkbox extends Vue {
 
 <style scoped>
 .checkbox {
+  cursor: pointer;
   display: block;
   font-size: 12px;
   line-height: 32px;
   padding: 0 12px;
+}
+
+.checkbox:focus,
+.checkbox:hover {
+  background-color: #ebebeb;
 }
 
 .checkbox__input {

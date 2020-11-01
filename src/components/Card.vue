@@ -27,20 +27,18 @@
       </div>
 
       <div class="additional-info">
-        <a
+        <a-link
           class="additional-info__link"
-          href="#"
           @click.prevent
         >
           Детали перелета
-        </a>
-        <a
+        </a-link>
+        <a-link
           class="additional-info__link"
-          href="#"
           @click.prevent
         >
           Условия тарифа
-        </a>
+        </a-link>
         <span
           v-if="!flight.refundable"
           class="additional_info__label"
@@ -104,11 +102,13 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import { mapGetters } from 'vuex';
 import DateTime from '@/components/DateTime.vue';
 import ItinerarySegments from '@/components/ItinerarySegments.vue';
+import ALink from '@/components/ALink.vue';
 
 @Component({
   components: {
     DateTime,
     ItinerarySegments,
+    ALink,
   },
   computed: mapGetters('filters', ['airlinesRaw']),
 })
@@ -194,11 +194,6 @@ export default class Card extends Vue {
 }
 
 .additional-info__link {
-  border-bottom: 1px dashed var(--buttonBlue);
-  color: var(--buttonBlue);
-  font-size: 12px;
-  line-height: 16px;
-  text-decoration: none;
   margin-right: 24px;
 }
 

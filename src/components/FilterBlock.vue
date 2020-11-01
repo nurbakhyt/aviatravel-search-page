@@ -1,53 +1,28 @@
 <template>
   <div class="filter">
-    <p class="filter__title">{{ title }}</p>
+    <p class="filter__title">
+      {{ title }}
+    </p>
 
-    <checkbox
-      v-for="filter in filters"
-      :key="filter.code"
-      :item="filter"
-      v-model="selectedList"
-    />
+    <slot name="reset-button" />
+
+    <slot />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { mapActions, mapGetters } from 'vuex';
-import Checkbox from '@/components/Checkbox.vue';
+import {
+  Component, Emit, Prop, Vue,
+} from 'vue-property-decorator';
 
-@Component({
-  components: { Checkbox },
-  computed: mapGetters('filters', ['selectedAirlines', 'selectedOptions']),
-  methods: mapActions('filters', ['selectAirlines', 'selectOptions']),
-})
+@Component
 export default class FilterBlock extends Vue {
-  @Prop()
+  @Prop({ required: true })
   title!: string;
 
-  @Prop({ required: true })
-  type!: FilterType;
-
-  @Prop({ required: true })
-  filters!: FilterOption[];
-
-  status = false;
-
-  get selectedList(): string[] {
-    if (this.type === 'options') {
-      return this.selectedOptions;
-    }
-
-    return this.selectedAirlines;
-  }
-
-  set selectedList(list: string[]) {
-    if (this.type === 'options') {
-      this.selectOptions(list);
-    } else if (this.type === 'airlines') {
-      this.selectAirlines(list);
-    }
-  }
+  @Emit()
+  // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-empty-function
+  reset() {}
 }
 </script>
 
@@ -58,13 +33,15 @@ export default class FilterBlock extends Vue {
   color: var(--deepDark);
   margin-bottom: 12px;
   padding: 12px 0;
+  position: relative;
 }
 
 .filter__title {
   font-size: 14px;
   font-weight: bold;
   line-height: 20px;
-  padding: 0 12px;
+  padding-right: 32px;
+  padding-left:  12px;
   margin-bottom: 12px;
 }
 </style>
