@@ -10,6 +10,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { mapActions } from 'vuex';
 import Container from '@/components/Container.vue';
 import Filters from '@/components/Filters.vue';
 import List from '@/components/List.vue';
@@ -20,8 +21,13 @@ import List from '@/components/List.vue';
     Filters,
     List,
   },
+  methods: mapActions(['loadAll']),
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  created() {
+    this.loadAll();
+  }
+}
 </script>
 
 <style>

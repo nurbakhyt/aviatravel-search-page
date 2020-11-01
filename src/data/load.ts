@@ -1,5 +1,5 @@
-import * as data from '@/data/results.json';
+import data from '@/data/results.json';
 
-export const loadAirlines: () => Promise<IsomorphicObject> = () => Promise.resolve(data.airlines);
-
-export const loadFlights: () => Promise<Flight[]> = () => Promise.resolve(data.flights);
+export default function (): Promise<IsomorphicObject> {
+  return Promise.resolve(data);
+}

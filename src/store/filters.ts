@@ -1,5 +1,4 @@
 import { ActionContext } from 'vuex';
-import { loadAirlines } from '@/data/load';
 
 /* eslint no-param-reassign: 0 */
 
@@ -37,9 +36,7 @@ export default {
     selectedOptions: (localState: FiltersState): string[] => localState.selectedOptions,
   },
   actions: {
-    async load({ commit }: ActionContext<FiltersState, RootState>) {
-      const airlines: IsomorphicObject = await loadAirlines();
-
+    init({ commit }: ActionContext<FiltersState, RootState>, airlines: IsomorphicObject) {
       commit('SET_AIRLINES', airlines);
     },
     selectAirlines({ commit }: ActionContext<FiltersState, RootState>, list: string[]) {
@@ -52,7 +49,7 @@ export default {
   mutations: {
     SET_AIRLINES(localState: FiltersState, airlines: IsomorphicObject) {
       localState.airlines = {
-        ...localState.airlines,
+        ALL: 'Все',
         ...airlines,
       };
     },

@@ -18,19 +18,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { mapActions, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 import FilterBlock from '@/components/FilterBlock.vue';
 
 @Component({
   components: { FilterBlock },
   computed: mapGetters('filters', ['airlinesArray', 'optionsArray']),
-  methods: mapActions('filters', ['load']),
 })
-export default class Filters extends Vue {
-  created() {
-    this.load();
-  }
-}
+export default class Filters extends Vue {}
 </script>
 
 <style scoped>

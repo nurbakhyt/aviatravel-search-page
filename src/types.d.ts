@@ -5,6 +5,7 @@ declare type Flight = {
   refundable: boolean;
   validating_carrier: string;
   itineraries: Array<Array<Itinerary>>;
+  services: IsomorphicObject;
 };
 
 declare type Itinerary = {
@@ -37,11 +38,18 @@ declare type FilterOption = {
 declare type FilterType = 'options' | 'airlines';
 
 declare type IsomorphicObject = {
-  [propName: string]: string;
+  [propName: string]: any;
+};
+
+declare type FlightsMap = {
+  [propName: string]: Flight;
 };
 
 declare type FlightsState = {
-  items: Flight[];
+  allIds: string[];
+  byId: FlightsMap;
+  byAirlines: IsomorphicObject;
+  byOptions: IsomorphicObject;
 };
 
 declare type FiltersState = {
