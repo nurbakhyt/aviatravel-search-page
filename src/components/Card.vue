@@ -42,7 +42,7 @@
           Условия тарифа
         </a>
         <span
-          v-if="flight.refundable"
+          v-if="!flight.refundable"
           class="additional_info__label"
         >
           <svg
