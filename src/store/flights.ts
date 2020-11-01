@@ -39,11 +39,17 @@ export default {
       let filteredIds = localState.allIds;
 
       if (selectedAirlines.length > 0) {
-        filteredIds = intersection(filteredIds, reducer(selectedAirlines, localState.byAirlines));
+        filteredIds = intersection(
+          filteredIds,
+          reducer(selectedAirlines, localState.byAirlines)
+        );
       }
 
       if (selectedOptions.length > 0) {
-        filteredIds = intersection(filteredIds, reducerOptions(selectedOptions, localState.byOptions));
+        filteredIds = intersection(
+          filteredIds,
+          reducerOptions(selectedOptions, localState.byOptions)
+        );
       }
 
       return filteredIds;

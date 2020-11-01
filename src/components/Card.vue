@@ -88,9 +88,12 @@
       </p>
       <button class="btn btn--buy">Выбрать</button>
       <p class="helper-text">Цена за всех пассажиров</p>
-      <div>
+      <div v-if="noBaggage">
         Нет багажа
         <button class="btn btn--info btn--sm">+ Добавить багаж</button>
+      </div>
+      <div v-else>
+        Есть багаж
       </div>
     </div>
   </article>
@@ -127,6 +130,10 @@ export default class Card extends Vue {
 
   get segments(): Segment[] {
     return this.itinerary.segments;
+  }
+
+  get noBaggage(): boolean {
+    return !!this.flight.services['0PC'];
   }
 }
 </script>
