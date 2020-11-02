@@ -12,17 +12,13 @@
 
 <script lang="ts">
 import {
-  Component, Emit, Prop, Vue,
+  Component, Prop, Vue,
 } from 'vue-property-decorator';
 
 @Component
 export default class FilterBlock extends Vue {
   @Prop({ required: true })
   title!: string;
-
-  @Emit()
-  // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-empty-function
-  reset() {}
 }
 </script>
 
