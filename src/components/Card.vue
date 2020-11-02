@@ -99,10 +99,12 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { mapGetters } from 'vuex';
+import { namespace } from 'vuex-class';
 import DateTime from '@/components/DateTime.vue';
 import ItinerarySegments from '@/components/ItinerarySegments.vue';
 import ALink from '@/components/ALink.vue';
+
+const filtersModule = namespace('filters');
 
 @Component({
   components: {
@@ -110,9 +112,10 @@ import ALink from '@/components/ALink.vue';
     ItinerarySegments,
     ALink,
   },
-  computed: mapGetters('filters', ['airlinesRaw']),
 })
 export default class Card extends Vue {
+  @filtersModule.Getter airlinesRaw!: IsomorphicObject;
+
   @Prop({ required: true })
   flight!: Flight;
 

@@ -17,14 +17,19 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { mapGetters } from 'vuex';
+import { namespace } from 'vuex-class';
 import Card from '@/components/Card.vue';
+
+const flightsModule = namespace('flights');
 
 @Component({
   components: { Card },
-  computed: mapGetters('flights', ['byId', 'filteredIds']),
 })
-export default class List extends Vue {}
+export default class List extends Vue {
+  @flightsModule.Getter byId!: FlightsMap;
+
+  @flightsModule.Getter filteredIds!: string[];
+}
 </script>
 
 <style scoped>
