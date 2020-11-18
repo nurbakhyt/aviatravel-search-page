@@ -1,4 +1,4 @@
-# aviata-task
+# aviatravel-search-page
 
 ## Project setup
 ```
